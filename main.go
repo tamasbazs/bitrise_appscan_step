@@ -13,46 +13,6 @@ import (
 	"strings"
 )
 
-type App struct {
-	ID                         string   "json:\"Id\""
-	Name                       string   "json:\"Name\""
-	AssetGroupID               string   "json:\"AssetGroupId\""
-	AssetGroupName             string   "json:\"AssetGroupName\""
-	BusinessImpact             string   "json:\"BusinessImpact\""
-	DateCreated                string   "json:\"DateCreated\""
-	LastUpdated                string   "json:\"LastUpdated\""
-	LastComment                string   "json:\"LastComment\""
-	URL                        string   "json:\"Url\""
-	Description                string   "json:\"Description\""
-	BusinessUnit               string   "json:\"BusinessUnit\""
-	Type                       string   "json:\"Type\""
-	Technology                 string   "json:\"Technology\""
-	TestingStatus              string   "json:\"TestingStatus\""
-	Hosts                      string   "json:\"Hosts\""
-	CollateralDamagePotential  string   "json:\"CollateralDamagePotential\""
-	TargetDistribution         string   "json:\"TargetDistribution\""
-	ConfidentialityRequirement string   "json:\"ConfidentialityRequirement\""
-	IntegrityRequirement       string   "json:\"IntegrityRequirement\""
-	AvailabilityRequirement    string   "json:\"AvailabilityRequirement\""
-	RiskRating                 string   "json:\"RiskRating\""
-	Tester                     string   "json:\"Tester\""
-	BusinessOwner              string   "json:\"BusinessOwner\""
-	DevelopmentContact         string   "json:\"DevelopmentContact\""
-	CreatedBy                  string   "json:\"CreatedBy\""
-	CriticalIssues             int      "json:\"CriticalIssues\""
-	HighIssues                 int      "json:\"HighIssues\""
-	MediumIssues               int      "json:\"MediumIssues\""
-	LowIssues                  int      "json:\"LowIssues\""
-	IssuesInProgress           int      "json:\"IssuesInProgress\""
-	MaxSeverity                string   "json:\"MaxSeverity\""
-	RRMaxSeverity              int      "json:\"RR_MaxSeverity\""
-	NewIssues                  int      "json:\"NewIssues\""
-	OpenIssues                 int      "json:\"OpenIssues\""
-	TotalIssues                int      "json:\"TotalIssues\""
-	OverallCompliance          string   "json:\"OverallCompliance\""
-	ComplianceStatuses         []string "json:\"ComplianceStatuses\""
-}
-
 func main() {
 
 	var filename = os.Getenv("BITRISE_APK_PATH")
@@ -113,7 +73,7 @@ func login(client *http.Client, usrLogin string, senha string) (map[string]strin
 
 func findIDApp(client *http.Client, token map[string]string, nomeApp string) (string, error) {
 	fmt.Println("Starting getting apps.....")
-	var retorno []map[string]string
+	var retorno []map[string]interface{}
 
 	req, err := http.NewRequest("GET", "https://appscan.ibmcloud.com/api/V2/Apps", nil)
 	req.Header.Set("Authorization", "Bearer "+token["Token"])
@@ -126,18 +86,11 @@ func findIDApp(client *http.Client, token map[string]string, nomeApp string) (st
 
 	data, _ := ioutil.ReadAll(resp.Body)
 	json.Unmarshal(data, &retorno)
-	todosApps := string(data)
-
-	//removendo colchetes
-	todosApps = todosApps[2 : len(todosApps)-1]
-	for _, app := range strings.Split(todosApps, "},{") {
-		app = "{" + app
-		app += "}"
-		App := &App{}
-		json.Unmarshal([]byte(app), App)
-		if App.Name == nomeApp {
-			fmt.Println("ID do App ", App.ID)
-			return App.ID, nil
+	for _, app := range retorno {
+		if app["Name"] == nomeApp {
+			fmt.Println("ID do App ", app["Id"])
+			id, _ := app["Id"].(string)
+			return id, nil
 		}
 	}
 
