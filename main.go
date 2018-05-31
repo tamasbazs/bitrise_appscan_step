@@ -23,25 +23,21 @@ func main() {
 	client := &http.Client{}
 	token, err := login(client, usrLogin, senha)
 	if err != nil {
-		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	idApp, err := findIDApp(client, token, appName)
 	if err != nil {
-		fmt.Println(err)
 		os.Exit(2)
 	}
 
 	idFile, err := uploadApp(client, token, filename)
 	if err != nil {
-		fmt.Println(err)
 		os.Exit(3)
 	}
 
 	_, err = doScanMobile(client, appName, token, idFile, idApp, usrLogin, senha)
 	if err != nil {
-		fmt.Println(err)
 		os.Exit(4)
 	}
 
@@ -50,18 +46,22 @@ func main() {
 
 func login(client *http.Client, usrLogin string, senha string) (map[string]string, error) {
 
-	fmt.Println("Starting login......")
+	fmt.Println("Starting login...")
 	m := make(map[string]string)
 
 	jsonData := map[string]string{"Username": usrLogin, "Password": senha}
 	jsonValue, _ := json.Marshal(jsonData)
 
 	req, err := http.NewRequest("POST", "https://appscan.ibmcloud.com/api/V2/Account/IBMIdLogin", bytes.NewBuffer(jsonValue))
-	req.Header.Add("Content-Type", "application/json")
-	resp, err := client.Do(req)
-
 	if err != nil {
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		fmt.Printf("Error creating a new HTTP request: %s\n", err)
+		return nil, err
+	}
+	req.Header.Add("Content-Type", "application/json")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Printf("The HTTP request to login failed with error: %s\n", err)
 		return nil, err
 	}
 
@@ -72,13 +72,17 @@ func login(client *http.Client, usrLogin string, senha string) (map[string]strin
 }
 
 func findIDApp(client *http.Client, token map[string]string, nomeApp string) (string, error) {
-	fmt.Println("Starting getting apps.....")
+	fmt.Println("Starting getting apps...")
 	var retorno []map[string]interface{}
 
 	req, err := http.NewRequest("GET", "https://appscan.ibmcloud.com/api/V2/Apps", nil)
+	if err != nil {
+		fmt.Printf("Error creating a new HTTP request: %s\n", err)
+		return "", err
+	}
+
 	req.Header.Set("Authorization", "Bearer "+token["Token"])
 	resp, err := client.Do(req)
-
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
 		return "", nil
@@ -93,7 +97,7 @@ func findIDApp(client *http.Client, token map[string]string, nomeApp string) (st
 			return id, nil
 		}
 	}
-
+	fmt.Println("Nenhuma aplicação com o nome " + nomeApp + " foi encontrada no AppScan")
 	return "", errors.New("Nenhuma aplicação com o nome " + nomeApp + " foi encontrada no AppScan")
 }
 
@@ -105,20 +109,20 @@ func uploadApp(client *http.Client, token map[string]string, filename string) (s
 
 	fileWriter, err := bodyWriter.CreateFormFile("fileToUpload", filename)
 	if err != nil {
-		fmt.Println("error writing to buffer")
+		fmt.Println("Error writting the request's body: ", err)
 		return "", err
 	}
 
 	fileHandle, err := os.Open(filename)
 	if err != nil {
-		fmt.Printf("error opening file")
+		fmt.Printf("Error opening the apk file: ", err)
 		return "", err
 	}
 	defer fileHandle.Close()
 
 	_, err = io.Copy(fileWriter, fileHandle)
 	if err != nil {
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		fmt.Printf("Error copying the apk to the request's body: ", err)
 		return "", err
 	}
 
@@ -126,7 +130,7 @@ func uploadApp(client *http.Client, token map[string]string, filename string) (s
 
 	req, err := http.NewRequest("POST", "https://appscan.ibmcloud.com/api/v2/FileUpload", bodyBuffer)
 	if err != nil {
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		fmt.Printf("Error creating a new request: %s\n", err)
 		return "", err
 	}
 
@@ -150,15 +154,14 @@ func uploadApp(client *http.Client, token map[string]string, filename string) (s
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Imprimindo erro")
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		fmt.Printf("Error reading the response data %s\n", err)
 		return "", err
 	}
 	resp.Body.Close()
 	retorno := make(map[string]string)
 	json.Unmarshal(data, &retorno)
 
-	fmt.Println("Exiting upload\n ...................................")
+	fmt.Println("Exiting upload...")
 	return retorno["FileId"], nil
 }
 
@@ -184,6 +187,7 @@ func doScanMobile(client *http.Client, name string, token map[string]string, idF
 
 	req, err := http.NewRequest("POST", "https://appscan.ibmcloud.com/api/v2/Scans/MobileAnalyzer", bytes.NewBuffer(jsonValue))
 	if err != nil {
+		fmt.Printf("Error creating a new request: %s\n", err)
 		return nil, err
 	}
 
