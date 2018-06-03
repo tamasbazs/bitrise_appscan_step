@@ -31,14 +31,19 @@ func main() {
 		os.Exit(2)
 	}
 
-	idFile, err := uploadApp(client, token, filename)
+	presence, err := getActivePresence(client, token)
 	if err != nil {
 		os.Exit(3)
 	}
 
-	_, err = doScanMobile(client, appName, token, idFile, idApp, usrLogin, senha)
+	idFile, err := uploadApp(client, token, filename)
 	if err != nil {
 		os.Exit(4)
+	}
+
+	_, err = doScanMobile(client, appName, token, idFile, idApp, usrLogin, senha, presence)
+	if err != nil {
+		os.Exit(5)
 	}
 
 	fmt.Println("Terminating the application...")
@@ -99,6 +104,37 @@ func findIDApp(client *http.Client, token map[string]string, nomeApp string) (st
 	}
 	fmt.Println("Nenhuma aplicação com o nome " + nomeApp + " foi encontrada no AppScan")
 	return "", errors.New("Nenhuma aplicação com o nome " + nomeApp + " foi encontrada no AppScan")
+}
+
+func getActivePresence(client *http.Client, token map[string]string) (string, error) {
+	fmt.Println("Searching all presences for an active one...")
+
+	var retorno []map[string]interface{}
+
+	req, err := http.NewRequest("GET", "https://appscan.ibmcloud.com/api/v2/Presences", nil)
+	if err != nil {
+		fmt.Printf("Error creating a new HTTP request: %s\n", err)
+		return "", err
+	}
+
+	req.Header.Set("Authorization", "Bearer "+token["Token"])
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		return "", nil
+	}
+
+	data, _ := ioutil.ReadAll(resp.Body)
+	json.Unmarshal(data, &retorno)
+	for _, presence := range retorno {
+		if presence["Status"] == "Active" {
+			fmt.Println("Presence ativa encontrada: ", presence["Id"])
+			id, _ := presence["Id"].(string)
+			return id, nil
+		}
+	}
+	fmt.Println("Nenhuma presence ativa foi encontrada no AppScan")
+	return "", errors.New("Nenhuma presence ativa foi encontrada no AppScan")
 }
 
 func uploadApp(client *http.Client, token map[string]string, filename string) (string, error) {
@@ -165,7 +201,7 @@ func uploadApp(client *http.Client, token map[string]string, filename string) (s
 	return retorno["FileId"], nil
 }
 
-func doScanMobile(client *http.Client, name string, token map[string]string, idFile string, idApp string, usrLogin string, senha string) (map[string]string, error) {
+func doScanMobile(client *http.Client, name string, token map[string]string, idFile string, idApp string, usrLogin string, senha string, presence string) (map[string]string, error) {
 	fmt.Println("Starting scan......")
 
 	m := make(map[string]string)
@@ -175,6 +211,7 @@ func doScanMobile(client *http.Client, name string, token map[string]string, idF
 		"LoginUser":              usrLogin,
 		"LoginPassword":          senha,
 		"ExtraField":             "",
+		"PresenceId":             presence,
 		"ScanName":               name,
 		"EnableMailNotification": "false",
 		"Locale":                 "en-US",
