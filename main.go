@@ -19,7 +19,9 @@ func main() {
 	appName := os.Getenv("APP_NAME")
 	usrLogin := os.Getenv("USER_LOGIN")
 	senha := os.Getenv("USER_PASSWORD")
-	presenceFlag := os.Getenv("FLAG_PRESENCE")
+	presence := os.Getenv("PRESENCE_ID")
+	appUser := os.Getenv("APP_USER")
+	appPassword := os.Getenv("APP_PASSWORD")
 
 	client := &http.Client{}
 	token, err := login(client, usrLogin, senha)
@@ -36,21 +38,9 @@ func main() {
 	if err != nil {
 		os.Exit(4)
 	}
-
-	if presenceFlag != "" {
-		presence, err := getActivePresence(client, token)
-		if err != nil {
-			os.Exit(3)
-		}
-		_, err = doPrivateScanMobile(client, appName, token, idFile, idApp, usrLogin, senha, presence)
-		if err != nil {
-			os.Exit(5)
-		}
-	} else {
-		_, err = doPublicScanMobile(client, appName, token, idFile, idApp, usrLogin, senha)
-		if err != nil {
-			os.Exit(6)
-		}
+	_, err = doScanMobile(client, appName, token, idFile, idApp, appUser, appPassword, presence)
+	if err != nil {
+		os.Exit(5)
 	}
 
 	fmt.Println("Terminating the application...")
@@ -112,38 +102,6 @@ func findIDApp(client *http.Client, token map[string]string, nomeApp string) (st
 	fmt.Println("Nenhuma aplicação com o nome " + nomeApp + " foi encontrada no AppScan")
 	return "", errors.New("Nenhuma aplicação com o nome " + nomeApp + " foi encontrada no AppScan")
 }
-
-func getActivePresence(client *http.Client, token map[string]string) (string, error) {
-	fmt.Println("Searching all presences for an active one...")
-
-	var retorno []map[string]interface{}
-
-	req, err := http.NewRequest("GET", "https://appscan.ibmcloud.com/api/v2/Presences", nil)
-	if err != nil {
-		fmt.Printf("Error creating a new HTTP request: %s\n", err)
-		return "", err
-	}
-
-	req.Header.Set("Authorization", "Bearer "+token["Token"])
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Printf("The HTTP request failed with error %s\n", err)
-		return "", nil
-	}
-
-	data, _ := ioutil.ReadAll(resp.Body)
-	json.Unmarshal(data, &retorno)
-	for _, presence := range retorno {
-		if presence["Status"] == "Active" {
-			fmt.Println("Presence ativa encontrada: ", presence["Id"])
-			id, _ := presence["Id"].(string)
-			return id, nil
-		}
-	}
-	fmt.Println("Nenhuma presence ativa foi encontrada no AppScan")
-	return "", errors.New("Nenhuma presence ativa foi encontrada no AppScan")
-}
-
 func uploadApp(client *http.Client, token map[string]string, filename string) (string, error) {
 	fmt.Println("Starting to upload files...")
 
@@ -208,56 +166,17 @@ func uploadApp(client *http.Client, token map[string]string, filename string) (s
 	return retorno["FileId"], nil
 }
 
-func doPrivateScanMobile(client *http.Client, name string, token map[string]string, idFile string, idApp string, usrLogin string, senha string, presence string) (map[string]string, error) {
+func doScanMobile(client *http.Client, name string, token map[string]string, idFile string, idApp string, login string, senha string, presence string) (map[string]string, error) {
 	fmt.Println("Starting scan......")
 
 	m := make(map[string]string)
 
 	jsonData := map[string]string{
 		"ApplicationFileId":      idFile,
-		"LoginUser":              usrLogin,
+		"LoginUser":              login,
 		"LoginPassword":          senha,
 		"ExtraField":             "",
 		"PresenceId":             presence,
-		"ScanName":               name,
-		"EnableMailNotification": "false",
-		"Locale":                 "en-US",
-		"AppId":                  idApp,
-		"Execute":                "true",
-		"Personal":               "false",
-		"OfferingType":           "None"}
-
-	jsonValue, _ := json.Marshal(jsonData)
-
-	req, err := http.NewRequest("POST", "https://appscan.ibmcloud.com/api/v2/Scans/MobileAnalyzer", bytes.NewBuffer(jsonValue))
-	if err != nil {
-		fmt.Printf("Error creating a new request: %s\n", err)
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", "Bearer "+token["Token"])
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Printf("The HTTP request failed with error %s\n", err)
-		return nil, err
-	}
-
-	data, _ := ioutil.ReadAll(resp.Body)
-	json.Unmarshal(data, &m)
-	return m, nil
-}
-
-func doPublicScanMobile(client *http.Client, name string, token map[string]string, idFile string, idApp string, usrLogin string, senha string) (map[string]string, error) {
-	fmt.Println("Starting scan......")
-
-	m := make(map[string]string)
-
-	jsonData := map[string]string{
-		"ApplicationFileId":      idFile,
-		"LoginUser":              usrLogin,
-		"LoginPassword":          senha,
-		"ExtraField":             "",
 		"ScanName":               name,
 		"EnableMailNotification": "false",
 		"Locale":                 "en-US",
