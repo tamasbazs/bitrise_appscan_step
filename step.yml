@@ -47,6 +47,12 @@ is_requires_admin_user: false
 is_always_run: false
 is_skippable: true
 run_if: true
+deps:
+  brew:
+  - name: go
+  apt_get:
+  - name: golang
+    bin_name: go
 
 toolkit:
   go:
@@ -62,7 +68,6 @@ inputs:
         Relative path to application's installer `./`
       is_expand: true
       is_required: true
-      value_options: []
   - app_name: 
     opts:
       title: "Application's Name and Version"
