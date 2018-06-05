@@ -23,8 +23,6 @@ func main() {
 	appUser := os.Getenv("APP_USER")
 	appPassword := os.Getenv("APP_PASSWORD")
 	
-	fmt.Println(filename)
-
 	client := &http.Client{}
 	token, err := login(client, usrLogin, senha)
 	if err != nil {
@@ -101,8 +99,8 @@ func findIDApp(client *http.Client, token map[string]string, nomeApp string) (st
 			return id, nil
 		}
 	}
-	fmt.Println("Nenhuma aplicação com o nome " + nomeApp + " foi encontrada no AppScan")
-	return "", errors.New("Nenhuma aplicação com o nome " + nomeApp + " foi encontrada no AppScan")
+	fmt.Println("No application found with the name " + nomeApp + " in AppScan")
+	return "", errors.New("No application found with the name " + nomeApp + " in AppScan")
 }
 func uploadApp(client *http.Client, token map[string]string, filename string) (string, error) {
 	fmt.Println("Starting to upload files...")
@@ -118,14 +116,14 @@ func uploadApp(client *http.Client, token map[string]string, filename string) (s
 
 	fileHandle, err := os.Open(filename)
 	if err != nil {
-		fmt.Printf("Error opening the apk file: ", err)
+		fmt.Printf("Error opening the APK/IPA file: ", err)
 		return "", err
 	}
 	defer fileHandle.Close()
 
 	_, err = io.Copy(fileWriter, fileHandle)
 	if err != nil {
-		fmt.Printf("Error copying the apk to the request's body: ", err)
+		fmt.Printf("Error copying the APK/IPA to the request's body: ", err)
 		return "", err
 	}
 
