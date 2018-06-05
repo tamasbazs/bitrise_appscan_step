@@ -15,13 +15,15 @@ import (
 
 func main() {
 
-	var filename = os.Getenv("$APK_PATH")
+	var filename = os.Getenv("APK_PATH")
 	appName := os.Getenv("APP_NAME")
 	usrLogin := os.Getenv("USER_LOGIN")
 	senha := os.Getenv("USER_PASSWORD")
 	presence := os.Getenv("PRESENCE_ID")
 	appUser := os.Getenv("APP_USER")
 	appPassword := os.Getenv("APP_PASSWORD")
+	
+	fmt.Println(filename)
 
 	client := &http.Client{}
 	token, err := login(client, usrLogin, senha)
