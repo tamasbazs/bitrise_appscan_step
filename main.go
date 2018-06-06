@@ -17,7 +17,7 @@ func main() {
 
 	var filename = os.Getenv("BITRISE_APK_PATH")
 	if filename == "" {
-		filename = os.Getenv("BITRISE_IPA_PATH")
+		filename = os.Getenv("IPA_PATH")
 	}
 	appName := os.Getenv("APP_NAME")
 	usrLogin := os.Getenv("USER_LOGIN")
