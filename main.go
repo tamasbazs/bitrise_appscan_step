@@ -23,9 +23,9 @@ func main() {
 	appUser := os.Getenv("APP_USER")
 	appPassword := os.Getenv("APP_PASSWORD")
 	
-	fmt.Println(filename)
-	fmt.Println(filename)
-	fmt.Println(filename)
+	fmt.Println(usrLogin)
+	fmt.Println(senha)
+	fmt.Println(appPassword)
 	
 	if len(filename) == 0{
 	    fmt.Println("Filename está vazio.")
