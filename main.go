@@ -15,7 +15,7 @@ import (
 
 func main() {
 
-	filename = os.Getenv("IPA_PATH")
+	filename := os.Getenv("IPA_PATH")
 	appName := os.Getenv("APP_NAME")
 	usrLogin := os.Getenv("USER_LOGIN")
 	senha := os.Getenv("USER_PASSWORD")
