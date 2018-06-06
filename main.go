@@ -15,17 +15,13 @@ import (
 
 func main() {
 
-	filename := os.Getenv("IPA_PATH")
+	filename := os.Getenv("APP_PATH")
 	appName := os.Getenv("APP_NAME")
 	usrLogin := os.Getenv("USER_LOGIN")
 	senha := os.Getenv("USER_PASSWORD")
 	presence := os.Getenv("PRESENCE_ID")
 	appUser := os.Getenv("APP_USER")
 	appPassword := os.Getenv("APP_PASSWORD")
-	
-	fmt.Println(usrLogin)
-	fmt.Println(senha)
-	fmt.Println(appPassword)
 	
 	if len(filename) == 0{
 	    fmt.Println("Filename está vazio.")
