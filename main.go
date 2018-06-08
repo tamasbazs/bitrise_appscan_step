@@ -48,16 +48,16 @@ func main() {
 
 	idApp, err := findIDApp(client, token, appName)
 	if err != nil {
-		os.Exit(2)
+		//	os.Exit(2)
 	}
 
 	idFile, err := uploadApp(client, token, filePath)
 	if err != nil {
-		os.Exit(4)
+		//	os.Exit(4)
 	}
 	_, err = doScanMobile(client, appName, token, idFile, idApp, appUser, appPassword, presence)
 	if err != nil {
-		os.Exit(5)
+		//	os.Exit(5)
 	}
 
 	fmt.Println("Terminating the application...")
@@ -176,11 +176,6 @@ func uploadApp(client *http.Client, token map[string]string, filePath string) (s
 		return "", err
 	}
 
-	if resp.StatusCode != 201 {
-		fmt.Printf("The HTTP request failed with status %d\n", resp.StatusCode)
-		return "", errors.New("The HTTP request failed with status " + string(resp.StatusCode))
-	}
-
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Printf("Error reading the response data %s\n", err)
@@ -190,6 +185,11 @@ func uploadApp(client *http.Client, token map[string]string, filePath string) (s
 	resp.Body.Close()
 	responseData := make(map[string]string)
 	json.Unmarshal(data, &responseData)
+
+	if resp.StatusCode != 201 {
+		fmt.Println("The HTTP request failed with status " + string(resp.StatusCode) + ": " + responseData["Message"])
+		return "", errors.New("The HTTP request failed with status " + string(resp.StatusCode) + ": " + responseData["Message"])
+	}
 
 	fmt.Println("Upload Succesful...")
 	return responseData["FileId"], nil
@@ -230,12 +230,12 @@ func doScanMobile(client *http.Client, name string, token map[string]string, idF
 		return nil, err
 	}
 
-	if resp.StatusCode != 201 {
-		fmt.Printf("The HTTP request failed with status %d\n", resp.StatusCode)
-		return nil, errors.New("The HTTP request failed with status " + string(resp.StatusCode))
-	}
-
 	data, _ := ioutil.ReadAll(resp.Body)
 	json.Unmarshal(data, &m)
+	if resp.StatusCode != 201 {
+		fmt.Println("The HTTP request failed with status " + string(resp.StatusCode) + ": " + m["Message"])
+		return nil, errors.New("The HTTP request failed with status " + string(resp.StatusCode) + ": " + m["Message"])
+	}
+
 	return m, nil
 }
