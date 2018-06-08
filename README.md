@@ -7,7 +7,7 @@ This Bitrise step needs seven environment variables:
 2. `APP_NAME` - The name of the application in the AppScan Cloud. (Required)
 3. `USER_LOGIN` - The username for log in to AppScan Cloud. (Required)
 4. `USER_PASSWORD` - The password for log in to AppScan Cloud. (Required)
-5. `PRESENCE_ID` - An active presence id running on a computer with access to the private network the application need. (Only needed if the application requires the access to the private network)
+5. `PRESENCE_ID` - An active presence id running on a computer with access to the private network the application need. (Only needed if the application requires the access to a private network)
 6. `APP_USER` - Username for log in the application. (Only needed if the application requires login)
 7. `APP_PASSWORD` - Password for log in the application. (Only needed if the application requires login)
 
