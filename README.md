@@ -3,13 +3,13 @@
 Performs security analysis using the IBM AppScan Cloud.
 
 This Bitrise step needs seven environment variables:
-1. APP\_PATH - The path to the APK/IPA file. (Required)
-2. APP\_NAME - The name of the application in the AppScan Cloud. (Required)
-3. USER\_LOGIN - The username for log in to AppScan Cloud. (Required)
-4. USER\_PASSWORD - The password for log in to AppScan Cloud. (Required)
-5. PRESENCE\_ID - An active presence id running on a computer with access to the private network the application need. (Only needed if the application needs the access to the private network)
-6. APP\_USER - Username for log in the application. (Only needed if the application requires login)
-7. APP\_PASSWORD - Password for log in the application. (Only needed if the application requires login)
+1. `APP\_PATH` - The path to the APK/IPA file. (Required)
+2. `APP\_NAME` - The name of the application in the AppScan Cloud. (Required)
+3. `USER\_LOGIN` - The username for log in to AppScan Cloud. (Required)
+4. `USER\_PASSWORD` - The password for log in to AppScan Cloud. (Required)
+5. `PRESENCE\_ID` - An active presence id running on a computer with access to the private network the application need. (Only needed if the application requires the access to the private network)
+6. `APP\_USER` - Username for log in the application. (Only needed if the application requires login)
+7. `APP\_PASSWORD` - Password for log in the application. (Only needed if the application requires login)
 
 
 ## How to use this Step
