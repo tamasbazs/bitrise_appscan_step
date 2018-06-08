@@ -48,16 +48,16 @@ func main() {
 
 	idApp, err := findIDApp(client, token, appName)
 	if err != nil {
-		//	os.Exit(2)
+		os.Exit(2)
 	}
 
 	idFile, err := uploadApp(client, token, filePath)
 	if err != nil {
-		//	os.Exit(4)
+		os.Exit(4)
 	}
 	_, err = doScanMobile(client, appName, token, idFile, idApp, appUser, appPassword, presence)
 	if err != nil {
-		//	os.Exit(5)
+		os.Exit(5)
 	}
 
 	fmt.Println("Terminating the application...")
