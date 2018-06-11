@@ -42,7 +42,7 @@ func main() {
 
 	client := &http.Client{}
 	token, err := login(client, usrLogin, password)
-	if err != nil || token["Token"] == "" {
+	if err != nil {
 		os.Exit(1)
 	}
 
