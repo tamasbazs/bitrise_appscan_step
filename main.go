@@ -187,7 +187,7 @@ func uploadApp(client *http.Client, token map[string]string, filePath string) (s
 	json.Unmarshal(data, &responseData)
 
 	if resp.StatusCode != 201 {
-		fmt.Println("The HTTP request failed with status " + string(resp.StatusCode) + ": " + responseData["Message"])
+		fmt.Printf("The HTTP request failed with status %d. Message: %s.\n", resp.StatusCode, responseData["Message"])
 		return "", errors.New("The HTTP request failed with status " + string(resp.StatusCode) + ": " + responseData["Message"])
 	}
 
@@ -233,7 +233,7 @@ func doScanMobile(client *http.Client, name string, token map[string]string, idF
 	data, _ := ioutil.ReadAll(resp.Body)
 	json.Unmarshal(data, &m)
 	if resp.StatusCode != 201 {
-		fmt.Println("The HTTP request failed with status " + string(resp.StatusCode) + ": " + m["Message"])
+		fmt.Printf("The HTTP request failed with status %d. Message: %s.\n", resp.StatusCode, m["Message"])
 		return nil, errors.New("The HTTP request failed with status " + string(resp.StatusCode) + ": " + m["Message"])
 	}
 
