@@ -15,7 +15,7 @@ import (
 
 func main() {
 
-	filePath := os.Getenv("APP_PATH")
+	filePath := os.Getenv("BITRISE_IPA_PATH")
 	appName := os.Getenv("APP_NAME")
 	usrLogin := os.Getenv("USER_LOGIN")
 	password := os.Getenv("USER_PASSWORD")
