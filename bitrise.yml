@@ -3,8 +3,8 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 app:
   envs:
-  - user_login: $USER_LOGIN
-  - user_pwd: $USER_PASSWORD
+  - USER_LOGIN: $USER_LOGIN
+  - USER_PASSWORD: $USER_PASSWORD
 
   # If you want to share this step into a StepLib
   - BITRISE_STEP_ID: bitrise-to-appscan
