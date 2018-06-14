@@ -15,7 +15,7 @@ import (
 
 func main() {
 
-	filePath := os.Getenv("APP_PATH")
+	filePath := os.Getenv("app_path")
 	appName := os.Getenv("app_name")
 	usrLogin := os.Getenv("user_name")
 	password := os.Getenv("user_password")
