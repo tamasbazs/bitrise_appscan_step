@@ -1,4 +1,4 @@
-title: AppScan security analysis
+title: AppScan Security Analysis
 summary: Performs security analysis using the IBM AppScan Cloud.
 description: |
   Performs security analysis using the IBM AppScan Cloud.
@@ -36,26 +36,31 @@ inputs:
   - user_name: 
     opts:
       title: "Username for AppScan"
+      is_expand: true
       is_required: true
   - user_password: 
     opts:
       title: "Password for AppScan"
+      is_expand: true
       is_required: true
   - app_user: 
     opts:
       title: "Application's Username"
       description: |
         Username to log in the application
+      is_expand: true
       is_required: false
   - app_password: 
     opts:
       title: "Application's Password"
       description: |
         Password to log in the application
+      is_expand: true
       is_required: false
   - presence_id: 
     opts:
       title: "Presence Id"
       description: |
         The Presence Id to access the private network of the application.
+      is_expand: true
       is_required: false
