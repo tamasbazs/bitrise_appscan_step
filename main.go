@@ -24,9 +24,13 @@ func main() {
 	presence := os.Getenv("presence_id")
 	
 	fmt.Println("----")
-	fmt.Println()
-	fmt.Println()
-	fmt.Println()
+	fmt.Println(filePath)
+	fmt.Println(appName)
+	fmt.Println(usrLogin)
+	fmt.Println(password)
+	fmt.Println(appUser)
+	fmt.Println(appPassword)
+	fmt.Println(presence)
 	fmt.Println("----")
 
 	if len(filePath) == 0 {
