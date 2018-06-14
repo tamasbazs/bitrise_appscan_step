@@ -15,13 +15,13 @@ import (
 
 func main() {
 
-	filePath := os.Getenv("BITRISE_IPA_PATH")
-	appName := os.Getenv("APP_NAME")
-	usrLogin := os.Getenv("USER_LOGIN")
-	password := os.Getenv("USER_PASSWORD")
-	presence := os.Getenv("PRESENCE_ID")
-	appUser := os.Getenv("APP_USER")
-	appPassword := os.Getenv("APP_PASSWORD")
+	filePath := os.Getenv("app_path")
+	appName := os.Getenv("app_name")
+	usrLogin := os.Getenv("user_name")
+	password := os.Getenv("user_password")
+	appUser := os.Getenv("app_user")
+	appPassword := os.Getenv("app_password")
+	presence := os.Getenv("presence_id")
 
 	if len(filePath) == 0 {
 		fmt.Println("APK/IPA path is empty")
