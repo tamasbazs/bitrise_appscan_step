@@ -6,8 +6,8 @@ app:
   # If you want to share this step into a StepLib
   - BITRISE_STEP_ID: bitrise-to-appscan
   - BITRISE_STEP_VERSION: "0.1.1"
-  - BITRISE_STEP_GIT_CLONE_URL: https://gitlab.com/felipe.leite/bitrise-step-appscan-mobile
-  - MY_STEPLIB_REPO_FORK_GIT_URL: https://gitlab.com/felipe.leite/bitrise-steplib
+  - BITRISE_STEP_GIT_CLONE_URL: https://github.com/lawtavares/bitrise-demo-step
+  - MY_STEPLIB_REPO_FORK_GIT_URL: https://github.com/lawtavares/bitrise-demo-step
 
 workflows:
   test:
