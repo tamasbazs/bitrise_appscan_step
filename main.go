@@ -22,6 +22,12 @@ func main() {
 	appUser := os.Getenv("app_user")
 	appPassword := os.Getenv("app_password")
 	presence := os.Getenv("presence_id")
+	
+	fmt.Println("----")
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
+	fmt.Println("----")
 
 	if len(filePath) == 0 {
 		fmt.Println("APK/IPA path is empty")
