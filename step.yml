@@ -19,20 +19,43 @@ toolkit:
   go:
     package_name: gitlab.com/felipe.leite/bitrise-step-appscan-mobile
 inputs:
-  - project_installer:
+  - app_path: $BITRISE_APK_PATH
     opts:
       title: "Path to APK/IPA"
-      summary: Relative path to application's installer
       description: |
-        Relative path to application's installer `./`
+        Relative path to application's installer (APK or IPA)
       is_expand: true
       is_required: true
   - app_name: 
     opts:
-      title: "Application's Name and Version"
-      summary: Application's Name and Version
+      title: "Application's Name on AppScan"
       description: |
-        Application's Name and Version
+        (If no application is found with the given name, the step will fail)
       is_expand: true
       is_required: true
-      value_options: []
+  - user_name: 
+    opts:
+      title: "Username for AppScan"
+      is_required: true
+  - user_password: 
+    opts:
+      title: "Password for AppScan"
+      is_required: true
+  - app_user: 
+    opts:
+      title: "Application's Username"
+      description: |
+        Username to log in the application
+      is_required: false
+  - app_password: 
+    opts:
+      title: "Application's Password"
+      description: |
+        Password to log in the application
+      is_required: false
+  - presence_id: 
+    opts:
+      title: "Presence Id"
+      description: |
+        The Presence Id to access the private network of the application.
+      is_required: false
