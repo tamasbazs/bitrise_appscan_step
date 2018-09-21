@@ -26,6 +26,9 @@ inputs:
         Relative path to application's installer (APK or IPA)
       is_expand: true
       is_required: true
+      value_options:
+      - "$BITRISE_APK_PATH"
+      - "$BITRISE_IPA_PATH"
   - app_name: 
     opts:
       title: "Application's Name on AppScan"
