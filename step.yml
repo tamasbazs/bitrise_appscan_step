@@ -21,9 +21,9 @@ toolkit:
 inputs:
   - app_path:
     opts:
-      title: "Path to APK/IPA"
+      title: "Choose file type: APK/IPA"
       description: |
-        Relative path to application's installer (APK or IPA)
+        Type of application's installer (APK or IPA)
       is_expand: true
       is_required: true
       value_options:

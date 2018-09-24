@@ -139,7 +139,7 @@ func uploadApp(client *http.Client, token map[string]string, filePath string) (s
 
 	fileHandle, err := os.Open(filePath)
 	if err != nil {
-		fmt.Printf("It was not possible to locate the file. Please verify if 'Path to APK/IPA' was chosen correctly. File: ", err)
+		fmt.Printf("It was not possible to locate the file. Please verify if file type was chosen correctly. File: ", err)
 		return "", err
 	}
 	defer fileHandle.Close()
