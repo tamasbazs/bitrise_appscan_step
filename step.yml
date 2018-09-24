@@ -19,7 +19,7 @@ toolkit:
   go:
     package_name: gitlab.com/felipe.leite/bitrise-step-appscan-mobile
 inputs:
-  - app_path: Choose file type
+  - app_path:
     opts:
       title: "Path to APK/IPA"
       description: |
