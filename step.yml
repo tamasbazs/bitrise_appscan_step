@@ -2,9 +2,9 @@ title: AppScan Security Analysis
 summary: Performs security analysis using the IBM AppScan Cloud.
 description: |
   Performs security analysis using the IBM AppScan Cloud.
-website: https://gitlab.com/felipe.leite/bitrise-step-appscan-mobile
-source_code_url: https://gitlab.com/felipe.leite/bitrise-step-appscan-mobile
-support_url: https://gitlab.com/felipe.leite/bitrise-step-appscan-mobile
+website: https://github.com/ipiranga-atq/bitrise_appscan_step
+source_code_url: https://github.com/ipiranga-atq/bitrise_appscan_step
+support_url: https://github.com/ipiranga-atq/bitrise_appscan_step
 host_os_tags:
   - osx-10.10
   - ubuntu-16.04
@@ -17,7 +17,7 @@ is_skippable: true
 run_if: ""
 toolkit:
   go:
-    package_name: gitlab.com/felipe.leite/bitrise-step-appscan-mobile
+    package_name: github.com/ipiranga-atq/bitrise_appscan_step
 inputs:
   - app_path: "$BITRISE_APK_PATH"
     opts:
