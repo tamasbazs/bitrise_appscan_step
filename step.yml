@@ -4,13 +4,13 @@ description: |
   Performs security analysis using the IBM AppScan Cloud.
 website: https://github.com/ipiranga-atq/bitrise_appscan_step
 source_code_url: https://github.com/ipiranga-atq/bitrise_appscan_step
-support_url: https://github.com/ipiranga-atq/bitrise_appscan_step
+support_url: https://github.com/ipiranga-atq/bitrise_appscan_step/issues
 host_os_tags:
   - osx-10.10
   - ubuntu-16.04
 project_type_tags: []
 type_tags:
-  - utility
+  - test
 is_requires_admin_user: false
 is_always_run: false
 is_skippable: true
@@ -23,12 +23,9 @@ inputs:
     opts:
       title: "Choose file type: APK/IPA"
       description: |
-        Type of application's installer (APK or IPA)
+        Path to the application IPA/PATH. Recommended is $BITRISE_APK_PATH or $BITRISE_IPA_PATH.
       is_expand: true
-      is_required: true
-      value_options:
-      - "$BITRISE_APK_PATH"
-      - "$BITRISE_IPA_PATH"
+      is_required: true      
   - app_name: 
     opts:
       title: "Application's Name on AppScan"
@@ -41,11 +38,13 @@ inputs:
       title: "Username for AppScan"
       is_expand: true
       is_required: true
+      is_sensitive: true
   - user_password: 
     opts:
       title: "Password for AppScan"
       is_expand: true
       is_required: true
+      is_sensitive: true
   - app_user: 
     opts:
       title: "Application's Username"
@@ -53,6 +52,7 @@ inputs:
         Username to log in the application
       is_expand: true
       is_required: false
+      is_sensitive: true
   - app_password: 
     opts:
       title: "Application's Password"
@@ -60,6 +60,7 @@ inputs:
         Password to log in the application
       is_expand: true
       is_required: false
+      is_sensitive: true
   - presence_id: 
     opts:
       title: "Presence Id"
