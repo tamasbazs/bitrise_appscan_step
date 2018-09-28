@@ -21,9 +21,9 @@ toolkit:
 inputs:
   - app_path: "$BITRISE_APK_PATH"
     opts:
-      title: "Choose file type: APK/IPA"
+      title: Path to the applications IPA/PATH.
       description: |
-        Path to the applications IPA/PATH. Recommended is '$BITRISE_APK_PATH' or '$BITRISE_IPA_PATH'.
+        Recommended is *$BITRISE_APK_PATH* or *$BITRISE_IPA_PATH*.
       is_expand: true
       is_required: true      
   - app_name: 
