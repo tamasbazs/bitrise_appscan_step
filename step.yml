@@ -24,25 +24,29 @@ inputs:
       title: Path to the applications IPA/PATH.
       description: |
         Recommended is *$BITRISE_APK_PATH* or *$BITRISE_IPA_PATH*.
-      is_expand: true
+      is_expand: false
       is_required: true      
   - app_name: 
     opts:
       title: "Application's Name on AppScan"
       description: |
         (If no application is found with the given name, the step will fail)
-      is_expand: true
+      is_expand: false
       is_required: true
-  - user_name: 
+  - key_id: 
     opts:
-      title: "Username for AppScan"
-      is_expand: true
+      title: "Key Id"
+      description: |
+        The Key Id generated into AppScan tool
+      is_expand: false
       is_required: true
       is_sensitive: true
-  - user_password: 
+  - key_secret: 
     opts:
-      title: "Password for AppScan"
-      is_expand: true
+      title: "Key Secret"
+      description: |
+        The Key Secret generated into AppScan tool with Key Id
+      is_expand: false
       is_required: true
       is_sensitive: true
   - app_user: 
@@ -50,7 +54,7 @@ inputs:
       title: "Application's Username"
       description: |
         Username to log in the application
-      is_expand: true
+      is_expand: false
       is_required: false
       is_sensitive: true
   - app_password: 
@@ -58,7 +62,7 @@ inputs:
       title: "Application's Password"
       description: |
         Password to log in the application
-      is_expand: true
+      is_expand: false
       is_required: false
       is_sensitive: true
   - presence_id: 
@@ -66,5 +70,5 @@ inputs:
       title: "Presence Id"
       description: |
         The Presence Id to access the private network of the application.
-      is_expand: true
+      is_expand: false
       is_required: false
