@@ -71,7 +71,7 @@ func login(client *http.Client, keyId string, keySecret string) (map[string]stri
 	jsonData := map[string]string{"KeyId": keyId, "KeySecret": keySecret} 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	req, err := http.NewRequest("POST", " https://cloud.appscan.com/api/V2/Account/ApiKeyLogin", bytes.NewBuffer(jsonValue))
+	req, err := http.NewRequest("POST", "https://cloud.appscan.com/api/V2/Account/ApiKeyLogin", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Printf("Error creating a new HTTP request: %s\n", err)
 		return nil, err
@@ -216,7 +216,7 @@ func doScanMobile(client *http.Client, name string, token map[string]string, idF
 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	req, err := http.NewRequest("POST", "https://appscan.ibmcloud.com/api/v2/Scans/MobileAnalyzer", bytes.NewBuffer(jsonValue))
+	req, err := http.NewRequest("POST", "https://cloud.appscan.com/api/v2/Scans/MobileAnalyzer", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Printf("Error creating a new request: %s\n", err)
 		return nil, err
