@@ -33,31 +33,31 @@ inputs:
         (If no application is found with the given name, the step will fail)
       is_expand: true
       is_required: true
-  - user_name: 
-    opts:
-      title: "Username for AppScan"
-      is_expand: true
-      is_required: true
-      is_sensitive: true
-  - user_password: 
-    opts:
-      title: "Password for AppScan"
-      is_expand: true
-      is_required: true
-      is_sensitive: true
   - key_id: 
     opts:
-      title: "Key ID"
-      description: |
-        Account Key ID
+      title: "Key Id"
       is_expand: true
-      is_required: false
+      is_required: true
       is_sensitive: true
   - key_secret: 
     opts:
       title: "Key Secret"
+      is_expand: true
+      is_required: true
+      is_sensitive: true
+  - app_user: 
+    opts:
+      title: "Application's Username"
       description: |
-        Account Key Secret
+        Username to log in the application
+      is_expand: true
+      is_required: false
+      is_sensitive: true
+  - app_password: 
+    opts:
+      title: "Application's Password"
+      description: |
+        Password to log in the application
       is_expand: true
       is_required: false
       is_sensitive: true
