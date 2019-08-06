@@ -88,8 +88,8 @@ func login(client *http.Client, keyId string, keySecret string) (map[string]stri
 	json.Unmarshal(data, &m)
 
 	if m["Token"] == "" {
-		fmt.Println("Not able to log in. Check your username and password.")
-		return nil, errors.New("Not able to log in. Check your username and password")
+		fmt.Println("Not able to log in. Check your Key Id and Secret.")
+		return nil, errors.New("Not able to log in. Check your Key Id and Secret")
 	}
 
 	fmt.Println("Exiting login...")

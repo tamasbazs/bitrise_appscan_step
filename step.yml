@@ -19,7 +19,7 @@ toolkit:
   go:
     package_name: github.com/ipiranga-atq/bitrise_appscan_step
 inputs:
-  - app_path: "../teste_appscan/KMDEVANTAGENS-3-16-0-VC241-HOMOLOG.apk"
+  - app_path: "$BITRISE_APK_PATH"
     opts:
       title: Path to the applications IPA/PATH.
       description: |
@@ -36,12 +36,16 @@ inputs:
   - key_id: 
     opts:
       title: "Key Id"
+      description: |
+        The Key Id generated into AppScan tool
       is_expand: true
       is_required: true
       is_sensitive: true
   - key_secret: 
     opts:
       title: "Key Secret"
+      description: |
+        The Key Secret generated into AppScan tool with Key Id
       is_expand: true
       is_required: true
       is_sensitive: true
