@@ -100,7 +100,7 @@ func findIDApp(client *http.Client, token map[string]string, nameApp string) (st
 	fmt.Println("Starting getting apps...")
 	var apps []map[string]interface{}
 
-	req, err := http.NewRequest("GET", " https://cloud.appscan.com/api/V2/Apps", nil)
+	req, err := http.NewRequest("GET", "https://cloud.appscan.com/api/V2/Apps", nil)
 	if err != nil {
 		fmt.Printf("Error creating a new HTTP request: %s\n", err)
 		return "", err
@@ -152,7 +152,7 @@ func uploadApp(client *http.Client, token map[string]string, filePath string) (s
 
 	err = bodyWriter.Close()
 
-	req, err := http.NewRequest("POST", " https://cloud.appscan.com/api/v2/FileUpload", bodyBuffer)
+	req, err := http.NewRequest("POST", "https://cloud.appscan.com/api/v2/FileUpload", bodyBuffer)
 	if err != nil {
 		fmt.Printf("Error creating a new request: %s\n", err)
 		return "", err
