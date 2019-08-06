@@ -45,19 +45,19 @@ inputs:
       is_expand: true
       is_required: true
       is_sensitive: true
-  - app_user: 
+  - key_id: 
     opts:
-      title: "Application's Username"
+      title: "Key ID"
       description: |
-        Username to log in the application
+        Account Key ID
       is_expand: true
       is_required: false
       is_sensitive: true
-  - app_password: 
+  - key_secret: 
     opts:
-      title: "Application's Password"
+      title: "Key Secret"
       description: |
-        Password to log in the application
+        Account Key Secret
       is_expand: true
       is_required: false
       is_sensitive: true

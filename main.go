@@ -17,8 +17,8 @@ func main() {
 
 	filePath := os.Getenv("app_path")
 	appName := os.Getenv("app_name")
-	usrLogin := os.Getenv("user_name")
-	password := os.Getenv("user_password")
+	keyId := os.Getenv("key_id")
+	keySecret := os.Getenv("key_secret")
 	appUser := os.Getenv("app_user")
 	appPassword := os.Getenv("app_password")
 	presence := os.Getenv("presence_id")
@@ -31,17 +31,17 @@ func main() {
 		fmt.Println("App name is empty")
 		os.Exit(10)
 	}
-	if len(password) == 0 {
-		fmt.Println("AppScan password is empty")
+	if len(keySecret) == 0 {
+		fmt.Println("AppScan keySecret is empty")
 		os.Exit(10)
 	}
-	if len(usrLogin) == 0 {
+	if len(keyId) == 0 {
 		fmt.Println("AppScan username is empty")
 		os.Exit(10)
 	}
 
 	client := &http.Client{}
-	token, err := login(client, usrLogin, password)
+	token, err := login(client, keyId, keySecret)
 	if err != nil {
 		os.Exit(1)
 	}
@@ -63,15 +63,15 @@ func main() {
 	fmt.Println("Terminating the application...")
 }
 
-func login(client *http.Client, usrLogin string, senha string) (map[string]string, error) {
+func login(client *http.Client, keyId string, keySecret string) (map[string]string, error) {
 
 	fmt.Println("Starting login...")
 	m := make(map[string]string)
 
-	jsonData := map[string]string{"Username": usrLogin, "Password": senha}
+	jsonData := map[string]string{"KeyId": keyId, "KeySecret": keySecret} 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	req, err := http.NewRequest("POST", "https://appscan.ibmcloud.com/api/V2/Account/IBMIdLogin", bytes.NewBuffer(jsonValue))
+	req, err := http.NewRequest("POST", " https://cloud.appscan.com/api/V2/Account/ApiKeyLogin", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Printf("Error creating a new HTTP request: %s\n", err)
 		return nil, err
@@ -100,7 +100,7 @@ func findIDApp(client *http.Client, token map[string]string, nameApp string) (st
 	fmt.Println("Starting getting apps...")
 	var apps []map[string]interface{}
 
-	req, err := http.NewRequest("GET", "https://appscan.ibmcloud.com/api/V2/Apps", nil)
+	req, err := http.NewRequest("GET", " https://cloud.appscan.com/api/V2/Apps", nil)
 	if err != nil {
 		fmt.Printf("Error creating a new HTTP request: %s\n", err)
 		return "", err
@@ -152,7 +152,7 @@ func uploadApp(client *http.Client, token map[string]string, filePath string) (s
 
 	err = bodyWriter.Close()
 
-	req, err := http.NewRequest("POST", "https://appscan.ibmcloud.com/api/v2/FileUpload", bodyBuffer)
+	req, err := http.NewRequest("POST", " https://cloud.appscan.com/api/v2/FileUpload", bodyBuffer)
 	if err != nil {
 		fmt.Printf("Error creating a new request: %s\n", err)
 		return "", err
