@@ -19,7 +19,7 @@ toolkit:
   go:
     package_name: github.com/ipiranga-atq/bitrise_appscan_step
 inputs:
-  - app_path: "$BITRISE_APK_PATH"
+  - app_path: $BITRISE_APK_PATH
     opts:
       title: Path to the applications IPA/PATH.
       description: |
