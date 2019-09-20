@@ -167,7 +167,7 @@ func uploadApp(client *http.Client, token map[string]string, filePath string) (s
 	req.Header.Add("Content-Type", "multipart/form-data; boundary=\""+boundary+"\"")
 	req.Header.Add("Accept-Encoding", "gzip,deflate")
 	req.Header.Add("Accept", "text/plain")
-	req.Header.Add("Connection", "Keep-Alive")
+	req.Header.Add("Connection", "keep-alive")
 	req.Header.Add("Authorization", "Bearer "+token["Token"])
 
 	resp, err := client.Do(req)
