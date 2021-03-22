@@ -71,7 +71,7 @@ func login(client *http.Client, keyId string, keySecret string) (map[string]stri
 	jsonData := map[string]string{"KeyId": keyId, "KeySecret": keySecret} 
 	jsonValue, _ := json.Marshal(jsonData)
 
-	req, err := http.NewRequest("POST", "https://cloud.appscan.com/api/V2/Account/ApiKeyLogin", bytes.NewBuffer(jsonValue))
+	req, err := http.NewRequest("POST", "https://appscan.myorg.com/api/V2/Account/ApiKeyLogin", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Printf("Error creating a new HTTP request: %s\n", err)
 		return nil, err
